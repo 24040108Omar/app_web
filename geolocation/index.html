@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>LocalizaciónSH | Geolocalización & APIs</title>
+  <meta name="description" content="Página informativa profesional sobre geolocalización, APIs, y mapa interactivo." />
+
+  <!-- Tipografía -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet (Mapa) -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+
+<body>
+  <!-- Fondo decorativo -->
+  <div class="bg-orbs" aria-hidden="true">
+    <span class="orb orb--1"></span>
+    <span class="orb orb--2"></span>
+    <span class="orb orb--3"></span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header__row">
+      <a class="brand" href="#top" aria-label="Ir al inicio">
+        <span class="brand__logo">LSH</span>
+        <span class="brand__text">
+          <span class="brand__name">LocalizaciónSH</span>
+          <span class="brand__tag">Mapa, Geolocalización & APIs</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="nav__link" href="#mapa">Mapa</a>
+        <a class="nav__link" href="#geolocalizacion">Geolocalización</a>
+        <a class="nav__link" href="#tipos">Tipos</a>
+        <a class="nav__link" href="#apps">Apps</a>
+        <a class="nav__link" href="#api">API</a>
+      </nav>
+
+      <button class="hamburger" id="btnMenu" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Menú móvil -->
+    <div class="mobile" id="mobileMenu" aria-hidden="true">
+      <div class="container mobile__panel">
+        <a class="mobile__link" href="#mapa">Mapa</a>
+        <a class="mobile__link" href="#geolocalizacion">Geolocalización</a>
+        <a class="mobile__link" href="#tipos">Tipos</a>
+        <a class="mobile__link" href="#apps">Apps</a>
+        <a class="mobile__link" href="#api">API</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top" class="main">
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__content reveal">
+          <span class="pill">Interfaz elegante • Animaciones al scroll • Mapa interactivo</span>
+          <h1 class="hero__title">
+            Geolocalización y APIs
+            <span class="hero__titleAccent">en una sola página</span>
+          </h1>
+          <p class="hero__subtitle">
+            Aprende qué es la geolocalización, sus tipos más usados, apps reales que la implementan,
+            qué es una API y cómo se generan claves API. Además, visualiza ubicaciones en un mapa.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#mapa">Ver mapa</a>
+            <a class="btn btn--ghost" href="#geolocalizacion">Leer contenido</a>
+          </div>
+
+          <div class="hero__stats">
+            <div class="stat">
+              <div class="stat__num">Leaflet</div>
+              <div class="stat__label">Mapa sin clave</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">Scroll</div>
+              <div class="stat__label">Animaciones suaves</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">UI</div>
+              <div class="stat__label">Cards y contenedores</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero__card reveal">
+          <div class="card card--glass">
+            <div class="card__header">
+              <h2 class="card__title">Panel de Ubicación</h2>
+              <p class="card__desc">Ubicación predefinida + tu ubicación actual</p>
+            </div>
+
+            <div class="mini">
+              <div class="mini__row">
+                <div class="mini__item">
+                  <span class="mini__k">Ubicación fija</span>
+                  <span class="mini__v" id="fixedLabel">Monterrey, NL (Centro)</span>
+                </div>
+                <div class="mini__item">
+                  <span class="mini__k">Coordenadas</span>
+                  <span class="mini__v" id="fixedCoords">25.6866, -100.3161</span>
+                </div>
+              </div>
+
+              <div class="mini__controls">
+                <button class="btn btn--primary btn--sm" id="btnMyLocation" type="button">
+                  Usar mi ubicación
+                </button>
+                <button class="btn btn--soft btn--sm" id="btnGoFixed" type="button">
+                  Ir a ubicación fija
+                </button>
+              </div>
+
+              <div class="mini__status" id="statusBox" role="status" aria-live="polite">
+                <span class="dot"></span>
+                <span id="statusText">Listo para localizar.</span>
+              </div>
+
+              <div class="mini__grid">
+                <div class="miniCard">
+                  <div class="miniCard__t">Tu latitud</div>
+                  <div class="miniCard__v" id="myLat">—</div>
+                </div>
+                <div class="miniCard">
+                  <div class="miniCard__t">Tu longitud</div>
+                  <div class="miniCard__v" id="myLng">—</div>
+                </div>
+                <div class="miniCard">
+                  <div class="miniCard__t">Precisión aprox.</div>
+                  <div class="miniCard__v" id="myAcc">—</div>
+                </div>
+                <div class="miniCard">
+                  <div class="miniCard__t">Fuente</div>
+                  <div class="miniCard__v" id="mySource">—</div>
+                </div>
+              </div>
+
+              <p class="mini__hint">
+                Nota: “Usar mi ubicación” requiere permiso del navegador (HTTPS o localhost).
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scrollCue" aria-hidden="true">
+        <span class="scrollCue__text">Desliza para ver más</span>
+        <span class="scrollCue__line"></span>
+      </div>
+    </section>
+
+    <!-- Sección Mapa -->
+    <section id="mapa" class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">Mapa interactivo</h2>
+          <p class="section__subtitle">
+            Visualiza una ubicación predefinida y, si quieres, agrega tu ubicación actual.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card reveal">
+            <div class="card__header">
+              <h3 class="card__title">Vista de mapa</h3>
+              <p class="card__desc">OpenStreetMap + Leaflet</p>
+            </div>
+            <div id="map" class="map" aria-label="Mapa interactivo"></div>
+            <div class="card__footer">
+              <span class="badge">Marcador fijo</span>
+              <span class="badge badge--soft">Marcador tuyo</span>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="card__header">
+              <h3 class="card__title">Diferentes tipos de ubicación (en práctica)</h3>
+              <p class="card__desc">Cómo se suelen representar y usar en apps</p>
+            </div>
+
+            <div class="cards">
+              <div class="infoCard">
+                <div class="infoCard__icon">📍</div>
+                <div class="infoCard__body">
+                  <div class="infoCard__t">Coordenadas (lat, lng)</div>
+                  <div class="infoCard__p">Forma universal para ubicar un punto exacto.</div>
+                </div>
+              </div>
+
+              <div class="infoCard">
+                <div class="infoCard__icon">🏷️</div>
+                <div class="infoCard__body">
+                  <div class="infoCard__t">Lugar etiquetado</div>
+                  <div class="infoCard__p">“Casa”, “Trabajo”, “Universidad”, etc. (ubicaciones guardadas).</div>
+                </div>
+              </div>
+
+              <div class="infoCard">
+                <div class="infoCard__icon">🧭</div>
+                <div class="infoCard__body">
+                  <div class="infoCard__t">Ubicación actual</div>
+                  <div class="infoCard__p">Detectada por GPS/Wi-Fi/red celular, con precisión variable.</div>
+                </div>
+              </div>
+
+              <div class="infoCard">
+                <div class="infoCard__icon">🌐</div>
+                <div class="infoCard__body">
+                  <div class="infoCard__t">Ubicación aproximada</div>
+                  <div class="infoCard__p">Estimación por IP o red: útil cuando no hay GPS.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card__footer">
+              <a class="link" href="#tipos">Ver tipos de geolocalización →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ¿Qué es geolocalización? -->
+    <section id="geolocalizacion" class="section section--alt">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">¿Qué es geolocalización?</h2>
+          <p class="section__subtitle">
+            Es el proceso de determinar la ubicación geográfica de un dispositivo, persona u objeto,
+            normalmente expresada como coordenadas (latitud/longitud) o como una zona aproximada.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card reveal">
+            <h3 class="card__kicker">Concepto</h3>
+            <p class="card__text">
+              La geolocalización combina señales y fuentes (GPS, Wi-Fi, red celular, IP, sensores)
+              para estimar dónde te encuentras y con qué precisión.
+            </p>
+          </article>
+
+          <article class="card reveal">
+            <h3 class="card__kicker">¿Para qué sirve?</h3>
+            <p class="card__text">
+              Navegación, entregas, transporte, seguridad, recomendaciones cercanas,
+              rastreo de activos, geofencing (zonas con reglas), marketing local, etc.
+            </p>
+          </article>
+
+          <article class="card reveal">
+            <h3 class="card__kicker">Precisión</h3>
+            <p class="card__text">
+              Puede ir desde metros (GPS) hasta kilómetros (IP). La precisión depende de señal,
+              entorno (interior/exterior) y permisos del usuario.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tipos más utilizados -->
+    <section id="tipos" class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">Tipos de geolocalización más utilizados</h2>
+          <p class="section__subtitle">
+            En la práctica, casi todas las apps combinan varias fuentes para mejorar exactitud y estabilidad.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card reveal">
+            <h3 class="card__title">Principales métodos</h3>
+            <ul class="list">
+              <li><span class="chip">GPS/GNSS</span> Alta precisión en exteriores (satélites).</li>
+              <li><span class="chip">Wi-Fi</span> Útil en interiores: triangulación por redes cercanas.</li>
+              <li><span class="chip">Red celular</span> Aproximación por torres (cobertura amplia).</li>
+              <li><span class="chip">IP</span> Estimación por red: menor precisión, pero disponible casi siempre.</li>
+              <li><span class="chip">Sensores</span> Brújula/acelerómetro para rumbo, movimiento, etc.</li>
+            </ul>
+          </div>
+
+          <div class="card reveal">
+            <h3 class="card__title">Comparación rápida</h3>
+            <div class="table">
+              <div class="tr th">
+                <div>Tipo</div>
+                <div>Precisión típica</div>
+                <div>Ventaja</div>
+              </div>
+              <div class="tr">
+                <div>GPS</div>
+                <div>Alta</div>
+                <div>Navegación exacta</div>
+              </div>
+              <div class="tr">
+                <div>Wi-Fi</div>
+                <div>Media-alta</div>
+                <div>Funciona en interiores</div>
+              </div>
+              <div class="tr">
+                <div>Celular</div>
+                <div>Media</div>
+                <div>Amplia cobertura</div>
+              </div>
+              <div class="tr">
+                <div>IP</div>
+                <div>Baja</div>
+                <div>Disponible sin GPS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Apps -->
+    <section id="apps" class="section section--alt">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">5 aplicaciones que utilizan geolocalización</h2>
+          <p class="section__subtitle">
+            Ejemplos típicos (transporte, mapas, entregas, redes sociales y fitness).
+          </p>
+        </div>
+
+        <div class="grid-5">
+          <div class="appCard reveal">
+            <div class="appCard__icon">🗺️</div>
+            <div class="appCard__t">Google Maps</div>
+            <div class="appCard__p">Rutas, tráfico, lugares cercanos.</div>
+          </div>
+          <div class="appCard reveal">
+            <div class="appCard__icon">🚗</div>
+            <div class="appCard__t">Uber</div>
+            <div class="appCard__p">Viajes, pickup, seguimiento en tiempo real.</div>
+          </div>
+          <div class="appCard reveal">
+            <div class="appCard__icon">🍔</div>
+            <div class="appCard__t">Uber Eats</div>
+            <div class="appCard__p">Entregas, cobertura por zona, tracking.</div>
+          </div>
+          <div class="appCard reveal">
+            <div class="appCard__icon">📸</div>
+            <div class="appCard__t">Instagram</div>
+            <div class="appCard__p">Ubicaciones en posts, lugares y recomendaciones.</div>
+          </div>
+          <div class="appCard reveal">
+            <div class="appCard__icon">🏃</div>
+            <div class="appCard__t">Strava</div>
+            <div class="appCard__p">Rutas, ritmo, distancia por GPS.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API -->
+    <section id="api" class="section">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2 class="section__title">¿Qué es una API y cómo se genera una clave API?</h2>
+          <p class="section__subtitle">
+            Una API conecta aplicaciones para compartir datos/funciones de forma controlada.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <article class="card reveal">
+            <h3 class="card__title">¿Qué es una API?</h3>
+            <p class="card__text">
+              Una API (Interfaz de Programación de Aplicaciones) es un conjunto de reglas y endpoints
+              que permiten que un sistema se comunique con otro. Por ejemplo, una app puede pedir
+              “clima de Monterrey” o “convertir coordenadas a dirección” a un servicio externo.
+            </p>
+            <div class="note">
+              <span class="note__dot"></span>
+              <span>Las APIs suelen requerir autenticación para limitar uso y proteger datos.</span>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <h3 class="card__title">¿Cómo se genera una clave API?</h3>
+            <ol class="steps">
+              <li>Entras al portal del proveedor (por ejemplo: Google, Mapbox, etc.).</li>
+              <li>Creas un proyecto o aplicación.</li>
+              <li>Habilitas el servicio/API que vas a usar.</li>
+              <li>Generas credenciales (API Key / Token).</li>
+              <li>Restringes la clave (dominios, IP, cuotas) para mayor seguridad.</li>
+            </ol>
+            <div class="callout">
+              Consejo: nunca publiques tu API Key en repositorios públicos. Usa variables de entorno o backend.
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer__row">
+        <div class="footer__left">
+          <div class="footer__brand">
+            <span class="brand__logo brand__logo--small">LSH</span>
+            <div>
+              <div class="footer__name">LocalizaciónSH</div>
+              <div class="footer__meta">HTML • CSS • JS • Leaflet</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer__right">
+          <a class="footer__link" href="#top">Volver arriba</a>
+          <span class="footer__sep">•</span>
+          <span class="footer__copy">© <span id="year"></span></span>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>
