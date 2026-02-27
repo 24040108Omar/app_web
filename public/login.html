@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cursos | Login</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Toastr -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav__brand"><a class="link" href="index.html">Cursos</a></div>
+  </header>
+
+  <main class="wrap">
+    <section class="card auth">
+      <h2>Iniciar sesión</h2>
+      <p class="muted">Ingresa tu correo y contraseña para acceder.</p>
+
+      <form id="loginForm" class="form">
+        <div class="field">
+          <label for="correo">Correo</label>
+          <input id="correo" type="email" placeholder="ej: alumno@user.com" required>
+        </div>
+
+        <div class="field">
+          <label for="contrasena">Contraseña</label>
+          <input id="contrasena" type="password" placeholder="Tu contraseña" required>
+        </div>
+
+        <button class="btn primary full" type="submit">Entrar</button>
+      </form>
+
+      <div class="hint">
+        <span class="muted">¿No era aquí?</span>
+        <a class="link" href="index.html">Volver al inicio</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toastr -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <script src="main.js"></script>
+</body>
+</html>

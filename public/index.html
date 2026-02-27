@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cursos | Inicio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav__brand">
+      <span class="brand-icon">✦</span> EduCursos
+    </div>
+    <div class="nav__actions">
+      <a class="btn primary" href="login.html">Iniciar sesión</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero__bg">
+      <div class="hero__overlay"></div>
+      <img
+        src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&auto=format&fit=crop"
+        alt="Estudiantes aprendiendo"
+        class="hero__img"
+        onerror="this.src=''; this.parentElement.style.background='linear-gradient(135deg,#3d5a80,#98c1d9)'"
+      />
+    </div>
+    <div class="hero__content">
+      <span class="hero__badge">Nueva temporada de cursos ✦</span>
+      <h1 class="hero__title">
+        Aprende algo<br/>
+        <em>extraordinario</em><br/>
+        hoy mismo.
+      </h1>
+      <p class="hero__sub">
+        Cursos profesionales con los mejores instructores.<br/>
+        Básico, Intermedio y Avanzado — tú eliges tu camino.
+      </p>
+      <div class="hero__cta">
+        <a class="btn hero-btn primary" href="login.html">Comenzar ahora</a>
+        <a class="btn hero-btn ghost" href="#cursos">Ver cursos ↓</a>
+      </div>
+      <div class="hero__stats">
+        <div class="stat"><span class="stat__n" id="statCursos">—</span><span class="stat__l">Cursos disponibles</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat"><span class="stat__n">3</span><span class="stat__l">Niveles de aprendizaje</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat"><span class="stat__n">100%</span><span class="stat__l">En línea y flexible</span></div>
+      </div>
+    </div>
+    <div class="hero__scroll-hint">
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features wrap">
+    <div class="feat-card">
+      <div class="feat-icon">🎯</div>
+      <h3>Aprende a tu ritmo</h3>
+      <p>Accede al contenido cuando quieras, desde cualquier dispositivo.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">👨‍🏫</div>
+      <h3>Instructores expertos</h3>
+      <p>Cada curso es impartido por profesionales con experiencia real.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon">🏅</div>
+      <h3>Certificación incluida</h3>
+      <p>Obtén tu certificado al completar cada curso satisfactoriamente.</p>
+    </div>
+  </section>
+
+  <!-- CURSOS SECTION -->
+  <section class="section-cursos wrap" id="cursos">
+    <div class="section-header">
+      <h2 class="section-title">Cursos disponibles</h2>
+      <p class="muted">Explora nuestro catálogo y encuentra el curso ideal para ti</p>
+    </div>
+
+    <!-- Filtros de nivel -->
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" data-nivel="Todos">Todos</button>
+      <button class="filter-btn" data-nivel="Básico">Básico</button>
+      <button class="filter-btn" data-nivel="Intermedio">Intermedio</button>
+      <button class="filter-btn" data-nivel="Avanzado">Avanzado</button>
+    </div>
+
+    <p class="muted text-center" id="emptyCursosPublic" hidden>Aún no hay cursos disponibles. ¡Vuelve pronto!</p>
+    <div class="courseGrid public" id="publicCourseGrid"></div>
+
+    <div class="cta-bottom">
+      <p>¿Listo para empezar?</p>
+      <a class="btn primary large" href="login.html">Accede a tu cuenta →</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__brand">✦ EduCursos</div>
+    <p class="muted">
+      © 2025 EduCursos. Todos los derechos reservados.</p>
+    <p>Aplicaciones Web</p>
+    <p>5 DSM B</p>
+    <p>Diego Omar Batres Camacho | Erick Everardo Garza Rodríguez</p>
+ 
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

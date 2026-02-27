@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cursos | Admin</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Toastr -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav__brand">Panel Admin</div>
+    <div class="nav__actions">
+      <button class="btn" id="btnLogout">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- Cursos creados -->
+    <section class="card">
+      <h2>Cursos creados</h2>
+      <p class="muted" id="emptyCursos" hidden>Aún no se han creado cursos.</p>
+      <div class="courseGrid" id="courseGrid"></div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Acciones -->
+    <section class="card">
+      <h2>Acciones</h2>
+      <div class="btnRow">
+        <button class="btn primary" id="btnCrear">Crear curso</button>
+        <button class="btn" id="btnActualizar">Actualizar curso</button>
+        <button class="btn danger" id="btnEliminar">Eliminar curso</button>
+      </div>
+
+      <!-- Panel: Crear -->
+      <div id="panelCrear" class="panel" hidden>
+        <h3>Crear curso</h3>
+
+        <div class="tableFake">
+          <div class="field">
+            <label>Nombre del curso</label>
+            <input id="c_nombre" type="text" placeholder="Ej: Programación Web" />
+          </div>
+          <div class="field">
+            <label>Profesor del curso</label>
+            <input id="c_profesor" type="text" placeholder="Ej: Ing. Pérez" />
+          </div>
+          <div class="field">
+            <label>Horas del curso</label>
+            <input id="c_horas" type="number" min="1" placeholder="Ej: 40" />
+          </div>
+          <div class="field">
+            <label>Costo</label>
+            <input id="c_costo" type="number" min="0" step="0.01" placeholder="Ej: 1499.99" />
+          </div>
+          <div class="field">
+            <label>Nivel</label>
+            <select id="c_nivel">
+              <option value="">Selecciona...</option>
+              <option value="Básico">Básico</option>
+              <option value="Intermedio">Intermedio</option>
+              <option value="Avanzado">Avanzado</option>
+            </select>
+          </div>
+
+          <button class="btn primary full" id="btnGuardarCurso">Guardar curso</button>
+        </div>
+      </div>
+
+      <!-- Panel: Actualizar -->
+      <div id="panelActualizar" class="panel" hidden>
+        <h3>Actualizar curso</h3>
+
+        <div class="tableFake">
+          <input type="hidden" id="u_id" />
+
+          <div class="field">
+            <label>Nombre del curso</label>
+            <input id="u_nombre" type="text" />
+          </div>
+          <div class="field">
+            <label>Profesor del curso</label>
+            <input id="u_profesor" type="text" />
+          </div>
+          <div class="field">
+            <label>Horas del curso</label>
+            <input id="u_horas" type="number" min="1" />
+          </div>
+          <div class="field">
+            <label>Costo</label>
+            <input id="u_costo" type="number" min="0" step="0.01" />
+          </div>
+          <div class="field">
+            <label>Nivel</label>
+            <select id="u_nivel">
+              <option value="">Selecciona...</option>
+              <option value="Básico">Básico</option>
+              <option value="Intermedio">Intermedio</option>
+              <option value="Avanzado">Avanzado</option>
+            </select>
+          </div>
+
+          <button class="btn primary full" id="btnUpdateCurso">Actualizar</button>
+        </div>
+
+        <h4 class="mt">Selecciona un curso para cargarlo</h4>
+        <p class="muted" id="emptyPick" hidden>No hay cursos para actualizar.</p>
+        <div class="courseGrid" id="pickGrid"></div>
+      </div>
+
+      <!-- Panel: Eliminar -->
+      <div id="panelEliminar" class="panel" hidden>
+        <h3>Eliminar curso</h3>
+        <p class="muted" id="emptyDelete" hidden>No hay cursos para eliminar.</p>
+        <div class="courseGrid" id="deleteGrid"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Toastr -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+  <script src="main.js"></script>
+</body>
+</html>
